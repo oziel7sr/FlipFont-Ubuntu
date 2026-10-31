@@ -19,9 +19,13 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Aceitar Licencas do Android e Instalar Android 35
+      - name: Configurar Android SDK e Licencas
         run: |
-          yes | sdkmanager --licenses > /dev/null
+          # Adiciona as ferramentas do Android ao PATH
+          export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$PATH
+          # Aceita todas as licencas pendentes
+          yes | sdkmanager --licenses || true
+          # Instala a plataforma do Android 15
           sdkmanager "platforms;android-35" "build-tools;35.0.0"
 
       - name: Instalar Gradle 8.9 Oficial
